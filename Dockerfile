@@ -11,7 +11,7 @@ COPY package.json yarn.lock ./
 RUN npm install -g ts-node
 
 # Install the dependencies
-RUN yarn install --frozen-lockfile
+RUN npm install
 
 # Copy the rest of the application files to the container
 COPY . .
