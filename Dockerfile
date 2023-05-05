@@ -11,9 +11,7 @@ COPY package.json yarn.lock ./
 RUN npm install -g ts-node
 
 # Install the dependencies
-RUN yarn config set sharp_binary_host "https://npmmirror.com/mirrors/sharp"
-RUN yarn config set sharp_libvips_binary_host "https://npmmirror.com/mirrors/sharp-libvips"
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 # Copy the rest of the application files to the container
 COPY . .
