@@ -1,5 +1,5 @@
 # Specify the base image
-FROM oven/bun
+FROM node:19
 
 # Set the working directory
 WORKDIR /app
@@ -7,11 +7,13 @@ WORKDIR /app
 # Copy the package.json and yarn.lock files to the container
 COPY package.json yarn.lock ./
 
+RUN npm install -g ts-node
+
 # Install the dependencies
-RUN bun install
+RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application files to the container
 COPY . .
 
 # Start the application
-CMD ["bun", "run", "index.ts"]
+CMD ["ts-node", "index.ts"]
