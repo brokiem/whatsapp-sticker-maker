@@ -1,7 +1,7 @@
-export function streamToBuffer(readableStream: ReadableStream): Promise<Buffer> {
+export function streamToBuffer(readableStream) {
   return new Promise((resolve, reject) => {
     const reader = readableStream.getReader();
-    const chunks: Uint8Array[] = [];
+    const chunks = [];
 
     function read() {
       reader.read().then(({done, value}) => {

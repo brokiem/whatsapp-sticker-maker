@@ -5,15 +5,10 @@ FROM node:19
 WORKDIR /app
 
 # Copy the package.json and yarn.lock files to the container
-COPY package.json tsconfig.json yarn.lock ./
-
-# Install ts-node
-RUN npm install -g tsc
+COPY package.json yarn.lock ./
 
 # Install the dependencies
 RUN yarn install
-
-RUN tsc
 
 # Copy the rest of the application files to the container
 COPY . .
