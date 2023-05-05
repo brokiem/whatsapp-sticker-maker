@@ -58,8 +58,8 @@ client.on('message', async (msg) => {
                 await client.sendMessage(msg.from, media, {
                     sendMediaAsSticker: true,
                     caption: 'Here\'s your sticker!',
-                    stickerAuthor: 'Sticker Pack',
-                    stickerName: 'broki\'s bot'
+                    stickerAuthor: 'broki\'s bot',
+                    stickerName: 'Sticker Pack'
                 });
                 return;
             }
@@ -90,8 +90,8 @@ client.on('message', async (msg) => {
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
                         caption: 'Here\'s your sticker!',
-                        stickerAuthor: 'Sticker Pack',
-                        stickerName: 'broki\'s bot'
+                        stickerAuthor: 'broki\'s bot',
+                        stickerName: 'Sticker Pack'
                     })
                 }
             } else if (msg.hasQuotedMsg) {
@@ -126,8 +126,8 @@ client.on('message', async (msg) => {
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
                         caption: 'Here\'s your sticker!',
-                        stickerAuthor: 'Sticker Pack',
-                        stickerName: 'broki\'s bot'
+                        stickerAuthor: 'broki\'s bot',
+                        stickerName: 'Sticker Pack'
                     });
                 }
             } else {
