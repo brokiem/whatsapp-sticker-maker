@@ -1,0 +1,13 @@
+{
+  "name": "wsm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/brokiem/wsm.git",
+  "author": "brokiem <milyhqvideo@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "sharp": "^0.32.1",
+    "whatsapp-web.js": "^1.19.5"
+  }
+}
