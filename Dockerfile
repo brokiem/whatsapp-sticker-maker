@@ -1,12 +1,6 @@
 # Specify the base image
 FROM node:19
 
-# Set the working directory
-WORKDIR /app
-
-# Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
-# Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
-# installs, work.
 RUN apt-get update \
     && apt-get install -y wget gnupg \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg \
@@ -16,6 +10,9 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd -r pptruser && useradd -rm -g pptruser -G audio,video pptruser \
+
+# Set the working directory
+WORKDIR /app
 
 # Copy the package.json and yarn.lock files to the container
 COPY package.json yarn.lock ./
