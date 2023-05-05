@@ -6,7 +6,19 @@ import {getUptime, streamToBuffer} from "./utils.js";
 const client = new Client({
     authStrategy: new LocalAuth({
         dataPath: process.env.AUTH_DATA_PATH || './data/.wwebjs_auth/'
-    })
+    }),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-gpu'
+        ]
+    }
 });
 
 client.on('qr', (qr) => {
