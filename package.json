@@ -6,6 +6,9 @@
   "author": "brokiem <milyhqvideo@gmail.com>",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "jimp": "^0.22.7",
     "whatsapp-web.js": "^1.19.5"
