@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy the package.json and yarn.lock files to the container
 COPY package.json yarn.lock ./
 
+# Install ts-node
 RUN npm install -g ts-node
 
 # Install the dependencies
