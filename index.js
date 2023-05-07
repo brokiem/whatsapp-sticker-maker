@@ -68,6 +68,10 @@ client.on('message', async (msg) => {
             if (msg.hasMedia) {
                 if (msg.type === MessageTypes.IMAGE || msg.type === MessageTypes.VIDEO) {
                     const media = await msg.downloadMedia();
+                    if (!media) {
+                        await msg.reply('Failed to download media, try again later.')
+                        return
+                    }
 
                     if (args.length > 0) {
                         switch (args[0]) {
@@ -103,7 +107,11 @@ client.on('message', async (msg) => {
                 }
 
                 if (quotedMsg.type === MessageTypes.IMAGE || quotedMsg.type === MessageTypes.VIDEO) {
-                    let media = await quotedMsg.downloadMedia()
+                    let media = await quotedMsg.downloadMedia();
+                    if (!media) {
+                        await msg.reply('Failed to download media, try again later.')
+                        return
+                    }
 
                     if (args.length > 0) {
                         switch (args[0]) {
