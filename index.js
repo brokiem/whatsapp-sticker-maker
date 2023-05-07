@@ -4,7 +4,7 @@ import Jimp from "jimp";
 import {getUptime, streamToBuffer} from "./utils.js";
 
 const client = new Client({
-    ffmpegPath: '/usr/bin/ffmpeg',
+    ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
     authStrategy: new LocalAuth({
         dataPath: process.env.AUTH_DATA_PATH || './data/.wwebjs_auth/'
     }),
