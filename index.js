@@ -74,22 +74,24 @@ client.on('message', async (msg) => {
                         return
                     }
 
-                    if (args.length > 0) {
-                        switch (args[0]) {
-                            case 'full':
-                                const buffer = Buffer.from(media.data, 'base64');
-                                const image = await Jimp.read(buffer);
-                                image.cover(512, 512);
-                                const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
-                                media.data = buf.toString('base64');
-                                break;
-                            case 'fill':
-                                const buffer2 = Buffer.from(media.data, 'base64');
-                                const image2 = await Jimp.read(buffer2);
-                                image2.resize(512, 512);
-                                const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
-                                media.data = buf2.toString('base64');
-                                break;
+                    if (msg.type === MessageTypes.IMAGE) {
+                        if (args.length > 0) {
+                            switch (args[0]) {
+                                case 'full':
+                                    const buffer = Buffer.from(media.data, 'base64');
+                                    const image = await Jimp.read(buffer);
+                                    image.cover(512, 512);
+                                    const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
+                                    media.data = buf.toString('base64');
+                                    break;
+                                case 'fill':
+                                    const buffer2 = Buffer.from(media.data, 'base64');
+                                    const image2 = await Jimp.read(buffer2);
+                                    image2.resize(512, 512);
+                                    const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
+                                    media.data = buf2.toString('base64');
+                                    break;
+                            }
                         }
                     }
 
@@ -114,22 +116,24 @@ client.on('message', async (msg) => {
                         return
                     }
 
-                    if (args.length > 0) {
-                        switch (args[0]) {
-                            case 'full':
-                                const buffer = Buffer.from(media.data, 'base64');
-                                const image = await Jimp.read(buffer);
-                                image.cover(512, 512);
-                                const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
-                                media.data = buf.toString('base64');
-                                break;
-                            case 'fill':
-                                const buffer2 = Buffer.from(media.data, 'base64');
-                                const image2 = await Jimp.read(buffer2);
-                                image2.resize(512, 512);
-                                const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
-                                media.data = buf2.toString('base64');
-                                break;
+                    if (msg.type === MessageTypes.IMAGE) {
+                        if (args.length > 0) {
+                            switch (args[0]) {
+                                case 'full':
+                                    const buffer = Buffer.from(media.data, 'base64');
+                                    const image = await Jimp.read(buffer);
+                                    image.cover(512, 512);
+                                    const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
+                                    media.data = buf.toString('base64');
+                                    break;
+                                case 'fill':
+                                    const buffer2 = Buffer.from(media.data, 'base64');
+                                    const image2 = await Jimp.read(buffer2);
+                                    image2.resize(512, 512);
+                                    const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
+                                    media.data = buf2.toString('base64');
+                                    break;
+                            }
                         }
                     }
 
