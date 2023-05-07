@@ -9,7 +9,7 @@ const client = new Client({
         dataPath: process.env.AUTH_DATA_PATH || './data/.wwebjs_auth/'
     }),
     puppeteer: {
-        executablePath: '/usr/bin/google-chrome-stable',
+        executablePath: process.env.GOOGLE_CHROME_PATH || '/usr/bin/google-chrome-stable',
         headless: true,
         args: [
             '--no-sandbox',
