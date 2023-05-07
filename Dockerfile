@@ -17,6 +17,9 @@ COPY package.json yarn.lock ./
 # Install the dependencies
 RUN yarn install
 
+# Export the path to ffmpeg binary
+ENV PATH="/usr/bin/ffmpeg:${PATH}"
+
 # Copy the rest of the application files to the container
 COPY . .
 
