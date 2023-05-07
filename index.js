@@ -116,7 +116,7 @@ client.on('message', async (msg) => {
                         return
                     }
 
-                    if (msg.type === MessageTypes.IMAGE) {
+                    if (quotedMsg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
                             switch (args[0]) {
                                 case 'full':
