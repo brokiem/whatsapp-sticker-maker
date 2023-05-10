@@ -37,10 +37,11 @@ client.on('message', async (msg) => {
 
     switch (command) {
         case '!help':
-            await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker\n - !sticker full\n - !sticker fill\n - !sticker <@mention>\n - !stats');
+            await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !stats');
             break;
         case '!sticker':
-            await client.sendMessage(msg.from, 'Processing your sticker...');
+            const stickerName = args[1] ?? args[0] ?? 'Sticker Pack';
+            await client.sendMessage(msg.from, `Processing your sticker (${stickerName})...`);
 
             const mentions = await msg.getMentions();
             if (mentions.length > 0) {
@@ -61,7 +62,7 @@ client.on('message', async (msg) => {
                     sendMediaAsSticker: true,
                     caption: 'Here\'s your sticker!',
                     stickerAuthor: 'broki\'s bot',
-                    stickerName: 'Sticker Pack'
+                    stickerName: stickerName
                 });
                 return;
             }
@@ -99,7 +100,7 @@ client.on('message', async (msg) => {
                         sendMediaAsSticker: true,
                         caption: 'Here\'s your sticker!',
                         stickerAuthor: 'broki\'s bot',
-                        stickerName: 'Sticker Pack'
+                        stickerName: stickerName
                     })
                 }
             } else if (msg.hasQuotedMsg) {
@@ -141,7 +142,7 @@ client.on('message', async (msg) => {
                         sendMediaAsSticker: true,
                         caption: 'Here\'s your sticker!',
                         stickerAuthor: 'broki\'s bot',
-                        stickerName: 'Sticker Pack'
+                        stickerName: stickerName
                     });
                 }
             } else {
