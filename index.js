@@ -96,6 +96,8 @@ client.on('message', async (msg) => {
                         stickerAuthor: 'broki\'s bot',
                         stickerName: stickerName
                     })
+                } else {
+                    await msg.reply('Only images and videos are supported.');
                 }
             } else if (msg.hasQuotedMsg) {
                 const quotedMsg = await msg.getQuotedMessage();
@@ -132,6 +134,8 @@ client.on('message', async (msg) => {
                         stickerAuthor: 'broki\'s bot',
                         stickerName: stickerName
                     });
+                } else {
+                    await msg.reply('Only images and videos are supported.');
                 }
             } else {
                 await client.sendMessage(msg.from, 'Please send/reply to an image or video to convert it to a sticker.');
