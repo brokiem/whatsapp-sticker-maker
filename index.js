@@ -60,7 +60,6 @@ client.on('message', async (msg) => {
                 const media = new MessageMedia('image/jpeg', buf.toString('base64'));
                 await client.sendMessage(msg.from, media, {
                     sendMediaAsSticker: true,
-                    caption: 'Here\'s your sticker!',
                     stickerAuthor: 'broki\'s bot',
                     stickerName: stickerName
                 });
@@ -92,7 +91,6 @@ client.on('message', async (msg) => {
 
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
-                        caption: 'Here\'s your sticker!',
                         stickerAuthor: 'broki\'s bot',
                         stickerName: stickerName
                     })
@@ -130,7 +128,6 @@ client.on('message', async (msg) => {
 
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
-                        caption: 'Here\'s your sticker!',
                         stickerAuthor: 'broki\'s bot',
                         stickerName: stickerName
                     });
