@@ -1,7 +1,7 @@
 import wweb, {Client} from "whatsapp-web.js";
 const {LocalAuth, MessageMedia, MessageTypes} = wweb;
-import Jimp from "jimp";
 import {getUptime, streamToBuffer} from "./utils.js";
+import {coverImage, fillImage} from "./image-utils.js";
 
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
@@ -80,17 +80,11 @@ client.on('message', async (msg) => {
                             switch (args[0]) {
                                 case 'full':
                                     const buffer = Buffer.from(media.data, 'base64');
-                                    const image = await Jimp.read(buffer);
-                                    image.cover(512, 512);
-                                    const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
-                                    media.data = buf.toString('base64');
+                                    media.data = await coverImage(buffer);
                                     break;
                                 case 'fill':
                                     const buffer2 = Buffer.from(media.data, 'base64');
-                                    const image2 = await Jimp.read(buffer2);
-                                    image2.resize(512, 512);
-                                    const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
-                                    media.data = buf2.toString('base64');
+                                    media.data = await fillImage(buffer2);
                                     break;
                             }
                         }
@@ -122,17 +116,11 @@ client.on('message', async (msg) => {
                             switch (args[0]) {
                                 case 'full':
                                     const buffer = Buffer.from(media.data, 'base64');
-                                    const image = await Jimp.read(buffer);
-                                    image.cover(512, 512);
-                                    const buf = await image.getBufferAsync(Jimp.MIME_JPEG);
-                                    media.data = buf.toString('base64');
+                                    media.data = await coverImage(buffer);
                                     break;
                                 case 'fill':
                                     const buffer2 = Buffer.from(media.data, 'base64');
-                                    const image2 = await Jimp.read(buffer2);
-                                    image2.resize(512, 512);
-                                    const buf2 = await image2.getBufferAsync(Jimp.MIME_JPEG);
-                                    media.data = buf2.toString('base64');
+                                    media.data = await fillImage(buffer2);
                                     break;
                             }
                         }
