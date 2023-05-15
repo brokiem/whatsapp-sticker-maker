@@ -1,3 +1,9 @@
+/**
+ * Converts a readable stream to a buffer.
+ *
+ * @param {ReadableStream} readableStream
+ * @returns {Buffer}
+ */
 export function streamToBuffer(readableStream) {
   return new Promise((resolve, reject) => {
     const reader = readableStream.getReader();
