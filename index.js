@@ -175,5 +175,11 @@ process.on("SIGINT", async () => {
     process.exit(0);
 })
 
+process.on("SIGTERM", async () => {
+    console.log("(SIGTERM) Shutting down...");
+    await client.destroy();
+    process.exit(0);
+})
+
 await client.initialize();
 
