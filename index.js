@@ -51,12 +51,19 @@ client.on('message', async (msg) => {
                     await client.sendMessage(msg.from, 'This contact has no profile picture.');
                     return;
                 }
+
                 const readableStream = await fetch(url).then(r => r.body).catch(() => null);
                 if (!readableStream) {
                     await client.sendMessage(msg.from, 'Failed to fetch profile picture.');
                     return;
                 }
+
                 const buf = await streamToBuffer(readableStream);
+                if (!(await isImage(buf))) {
+                    await client.sendMessage(msg.from, 'Only images are supported.');
+                    return;
+                }
+
                 const media = new MessageMedia('image/jpeg', buf.toString('base64'));
                 await client.sendMessage(msg.from, media, {
                     sendMediaAsSticker: true,
