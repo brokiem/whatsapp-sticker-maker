@@ -1,4 +1,5 @@
 import Jimp from "jimp";
+import {fileTypeFromBuffer} from "file-type";
 
 /**
  * @param {Buffer} buffer
@@ -38,8 +39,8 @@ export async function convertToJpeg(buffer) {
  * @returns {Promise<boolean>}
  */
 export async function isImage(buffer) {
-    const image = await Jimp.read(buffer);
-    const mime = image.getMIME();
+    const fileType = await fileTypeFromBuffer(buffer);
+    const mime = fileType.mime;
     const supportedFormats = ['image/gif', 'image/jpeg', 'image/png'];
     return supportedFormats.includes(mime);
 }

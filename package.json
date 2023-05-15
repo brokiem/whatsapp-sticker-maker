@@ -10,6 +10,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "file-type": "^18.4.0",
     "jimp": "^0.22.8",
     "whatsapp-web.js": "^1.19.5"
   }
