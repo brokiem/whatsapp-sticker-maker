@@ -1,7 +1,7 @@
 import wweb, {Client} from "whatsapp-web.js";
 const {LocalAuth, MessageMedia, MessageTypes} = wweb;
 import {getUptime, streamToBuffer} from "./utils.js";
-import {convertToJpeg, coverImage, fillImage} from "./image-utils.js";
+import {convertToJpeg, coverImage, fillImage, isImage} from "./image-utils.js";
 
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
@@ -140,16 +140,24 @@ client.on('message', async (msg) => {
                         await client.sendMessage(msg.from, 'Failed to fetch media.');
                         return;
                     }
-                    let buf = await convertToJpeg(await streamToBuffer(readableStream));
+
+                    const buffer = await streamToBuffer(readableStream);
+                    if (!(await isImage(buffer))) {
+                        await client.sendMessage(msg.from, 'Only images are supported.');
+                        return;
+                    }
+
+                    let imageBuf = await convertToJpeg(buffer);
                     switch (args[1] || '') {
                         case 'full':
-                            buf = await coverImage(buf);
+                            imageBuf = await coverImage(imageBuf);
                             break;
                         case 'fill':
-                            buf = await fillImage(buf);
+                            imageBuf = await fillImage(imageBuf);
                             break;
                     }
-                    const media = new MessageMedia('image/jpeg', buf.toString('base64'));
+
+                    const media = new MessageMedia('image/jpeg', imageBuf.toString('base64'));
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
                         stickerAuthor: 'broki\'s bot',

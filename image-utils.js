@@ -30,3 +30,16 @@ export async function convertToJpeg(buffer) {
     const image = await Jimp.read(buffer);
     return await image.getBufferAsync(Jimp.MIME_JPEG);
 }
+
+/**
+ * Check if buffer is an image
+ *
+ * @param {Buffer} buffer
+ * @returns {Promise<boolean>}
+ */
+export async function isImage(buffer) {
+    const image = await Jimp.read(buffer);
+    const mime = image.getMIME();
+    const supportedFormats = ['image/gif', 'image/jpeg', 'image/png'];
+    return supportedFormats.includes(mime);
+}
