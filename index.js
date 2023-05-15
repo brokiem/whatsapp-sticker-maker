@@ -40,7 +40,7 @@ client.on('message', async (msg) => {
             await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !stats');
             break;
         case '!sticker':
-            const stickerName = args[2] ?? args[1] ?? args[0] ?? 'Sticker Pack';
+            let stickerName = args[2] ?? args[1] ?? args[0] ?? 'Sticker Pack';
             await client.sendMessage(msg.from, `Processing your sticker (${stickerName})...`);
 
             const mentions = await msg.getMentions();
@@ -81,6 +81,8 @@ client.on('message', async (msg) => {
                         return
                     }
 
+                    stickerName = args[0] ?? 'Sticker Pack';
+
                     if (msg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
                             const buffer = Buffer.from(media.data, 'base64');
@@ -94,6 +96,8 @@ client.on('message', async (msg) => {
                             }
                         }
                     }
+
+                    stickerName = args[1] ?? 'Sticker Pack';
 
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
@@ -117,6 +121,8 @@ client.on('message', async (msg) => {
                         return
                     }
 
+                    stickerName = args[0] ?? 'Sticker Pack';
+
                     if (quotedMsg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
                             const buffer = Buffer.from(media.data, 'base64');
@@ -130,6 +136,8 @@ client.on('message', async (msg) => {
                             }
                         }
                     }
+
+                    stickerName = args[1] ?? 'Sticker Pack';
 
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
@@ -154,6 +162,8 @@ client.on('message', async (msg) => {
                         return;
                     }
 
+                    stickerName = args[1] ?? 'Sticker Pack';
+
                     let imageBuf = await convertToJpeg(buffer);
                     switch (args[1] || '') {
                         case 'full':
@@ -163,6 +173,8 @@ client.on('message', async (msg) => {
                             imageBuf = await fillImage(imageBuf);
                             break;
                     }
+
+                    stickerName = args[2] ?? 'Sticker Pack';
 
                     const media = new MessageMedia('image/jpeg', imageBuf.toString('base64'));
                     await client.sendMessage(msg.from, media, {
