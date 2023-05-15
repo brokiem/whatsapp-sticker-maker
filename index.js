@@ -1,7 +1,7 @@
 import wweb, {Client} from "whatsapp-web.js";
 const {LocalAuth, MessageMedia, MessageTypes} = wweb;
 import {getUptime, streamToBuffer} from "./utils.js";
-import {coverImage, fillImage} from "./image-utils.js";
+import {convertToJpeg, coverImage, fillImage} from "./image-utils.js";
 
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
@@ -40,7 +40,7 @@ client.on('message', async (msg) => {
             await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !stats');
             break;
         case '!sticker':
-            const stickerName = args[1] ?? args[0] ?? 'Sticker Pack';
+            const stickerName = args[2] ?? args[1] ?? args[0] ?? 'Sticker Pack';
             await client.sendMessage(msg.from, `Processing your sticker (${stickerName})...`);
 
             const mentions = await msg.getMentions();
@@ -133,7 +133,34 @@ client.on('message', async (msg) => {
                     await msg.reply('Only images and videos are supported.');
                 }
             } else {
-                await client.sendMessage(msg.from, 'Please send/reply to an image or video to convert it to a sticker.');
+                if (args.length > 0) {
+                    const url = args[0];
+                    const readableStream = await fetch(url).then(r => r.body);
+                    if (!readableStream) {
+                        await client.sendMessage(msg.from, 'Failed to fetch media.');
+                        return;
+                    }
+                    let buf = await convertToJpeg(await streamToBuffer(readableStream));
+                    switch (args[1] || '') {
+                        case 'full':
+                            buf = await coverImage(buf);
+                            break;
+                        case 'fill':
+                            buf = await fillImage(buf);
+                            break;
+                        default:
+                            buf = buf.toString('base64');
+                            break;
+                    }
+                    const media = new MessageMedia('image/jpeg', buf);
+                    await client.sendMessage(msg.from, media, {
+                        sendMediaAsSticker: true,
+                        stickerAuthor: 'broki\'s bot',
+                        stickerName: stickerName
+                    });
+                } else {
+                    await client.sendMessage(msg.from, 'Please send/reply to an image or video to convert it to a sticker.');
+                }
             }
             break;
         case "!stats":
