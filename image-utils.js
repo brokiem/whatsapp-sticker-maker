@@ -5,9 +5,9 @@ import Jimp from "jimp";
  * @returns {Promise<Buffer>}
  */
 export async function coverImage(buffer) {
-    const image = await Jimp.read(buffer);
+    const image = await Jimp.read(buffer).catch(() => null);
     image.cover(512, 512);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    return await image.getBufferAsync(Jimp.MIME_JPEG).catch(() => null);
 }
 
 /**
@@ -15,9 +15,9 @@ export async function coverImage(buffer) {
  * @returns {Promise<Buffer>}
  */
 export async function fillImage(buffer) {
-    const image = await Jimp.read(buffer);
+    const image = await Jimp.read(buffer).catch(() => null);
     image.resize(512, 512);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    return await image.getBufferAsync(Jimp.MIME_JPEG).catch(() => null);
 }
 
 /**
@@ -27,6 +27,6 @@ export async function fillImage(buffer) {
  * @returns {Promise<Buffer>}
  */
 export async function convertToJpeg(buffer) {
-    const image = await Jimp.read(buffer);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    const image = await Jimp.read(buffer).catch(() => null);
+    return await image.getBufferAsync(Jimp.MIME_JPEG).catch(() => null);
 }
