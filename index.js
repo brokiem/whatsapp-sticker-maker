@@ -76,14 +76,13 @@ client.on('message', async (msg) => {
 
                     if (msg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
+                            const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
-                                    const buffer = Buffer.from(media.data, 'base64');
                                     media.data = await coverImage(buffer);
                                     break;
                                 case 'fill':
-                                    const buffer2 = Buffer.from(media.data, 'base64');
-                                    media.data = await fillImage(buffer2);
+                                    media.data = await fillImage(buffer);
                                     break;
                             }
                         }
@@ -113,14 +112,13 @@ client.on('message', async (msg) => {
 
                     if (quotedMsg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
+                            const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
-                                    const buffer = Buffer.from(media.data, 'base64');
                                     media.data = await coverImage(buffer);
                                     break;
                                 case 'fill':
-                                    const buffer2 = Buffer.from(media.data, 'base64');
-                                    media.data = await fillImage(buffer2);
+                                    media.data = await fillImage(buffer);
                                     break;
                             }
                         }
