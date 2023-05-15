@@ -51,7 +51,7 @@ client.on('message', async (msg) => {
                     await client.sendMessage(msg.from, 'This contact has no profile picture.');
                     return;
                 }
-                const readableStream = await fetch(url).then(r => r.body);
+                const readableStream = await fetch(url).then(r => r.body).catch(() => null);
                 if (!readableStream) {
                     await client.sendMessage(msg.from, 'Failed to fetch profile picture.');
                     return;
@@ -135,7 +135,7 @@ client.on('message', async (msg) => {
             } else {
                 if (args.length > 0) {
                     const url = args[0];
-                    const readableStream = await fetch(url).then(r => r.body);
+                    const readableStream = await fetch(url).then(r => r.body).catch(() => null);
                     if (!readableStream) {
                         await client.sendMessage(msg.from, 'Failed to fetch media.');
                         return;
