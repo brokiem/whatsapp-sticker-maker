@@ -79,10 +79,10 @@ client.on('message', async (msg) => {
                             const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
-                                    media.data = await coverImage(buffer);
+                                    media.data = (await coverImage(buffer)).toString('base64');
                                     break;
                                 case 'fill':
-                                    media.data = await fillImage(buffer);
+                                    media.data = (await fillImage(buffer)).toString('base64');
                                     break;
                             }
                         }
@@ -115,10 +115,10 @@ client.on('message', async (msg) => {
                             const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
-                                    media.data = await coverImage(buffer);
+                                    media.data = (await coverImage(buffer)).toString('base64');
                                     break;
                                 case 'fill':
-                                    media.data = await fillImage(buffer);
+                                    media.data = (await fillImage(buffer)).toString('base64');
                                     break;
                             }
                         }
@@ -148,11 +148,8 @@ client.on('message', async (msg) => {
                         case 'fill':
                             buf = await fillImage(buf);
                             break;
-                        default:
-                            buf = buf.toString('base64');
-                            break;
                     }
-                    const media = new MessageMedia('image/jpeg', buf);
+                    const media = new MessageMedia('image/jpeg', buf.toString('base64'));
                     await client.sendMessage(msg.from, media, {
                         sendMediaAsSticker: true,
                         stickerAuthor: 'broki\'s bot',
