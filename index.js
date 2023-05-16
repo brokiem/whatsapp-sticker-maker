@@ -188,7 +188,7 @@ client.on('message', async (msg) => {
  * @returns {Promise<void>}
  */
 async function sendSticker(msg, media, stickerName) {
-    await client.sendMessage(msg.from, 'Processing your sticker...');
+    await client.sendMessage(msg.from, `Processing your sticker (${stickerName})...`);
     await client.sendMessage(msg.from, media, {
         sendMediaAsSticker: true,
         stickerAuthor: 'broki\'s bot',
