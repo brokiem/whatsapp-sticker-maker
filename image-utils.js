@@ -40,6 +40,8 @@ export async function convertToJpeg(buffer) {
  */
 export async function isImage(buffer) {
     const fileType = await fileTypeFromBuffer(buffer);
+    if (!fileType) return false;
+
     const mime = fileType.mime;
     const supportedFormats = ['image/gif', 'image/jpeg', 'image/png'];
     return supportedFormats.includes(mime);
