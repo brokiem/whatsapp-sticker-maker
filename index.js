@@ -2,6 +2,7 @@ import wweb, {Client} from "whatsapp-web.js";
 const {LocalAuth, MessageMedia, MessageTypes} = wweb;
 import {getUptime, streamToBuffer} from "./utils.js";
 import {convertToJpeg, coverImage, fillImage, isImage} from "./image-utils.js";
+import {fileTypeFromBuffer} from "file-type";
 
 const DEFAULT_STICKER_NAME = 'Sticker Pack';
 
@@ -153,7 +154,9 @@ client.on('message', async (msg) => {
 
                     stickerName = args[1] ?? DEFAULT_STICKER_NAME;
 
-                    let imageBuf = await convertToJpeg(buffer);
+                    const fileType = await fileTypeFromBuffer(buffer);
+                    const mime = fileType?.mime ?? '';
+                    let imageBuf = mime === "image/gif" ? buffer : await convertToJpeg(buffer);
                     switch (args[1] || '') {
                         case 'full':
                             stickerName = args[2] ?? DEFAULT_STICKER_NAME;
