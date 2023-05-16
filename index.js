@@ -39,7 +39,7 @@ client.on('message', async (msg) => {
 
     switch (command) {
         case '!help':
-            await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !stats');
+            await client.sendMessage(msg.from, 'Available commands:\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !sticker <url> <full|fill> <stickerName>\n - !stats');
             break;
         case '!sticker':
             let stickerName = DEFAULT_STICKER_NAME;
