@@ -3,33 +3,36 @@ import {fileTypeFromBuffer} from "file-type";
 
 /**
  * @param {Buffer} buffer
+ * @param mimeType
  * @returns {Promise<Buffer>}
  */
-export async function coverImage(buffer) {
+export async function coverImage(buffer, mimeType = Jimp.MIME_JPEG) {
     const image = await Jimp.read(buffer);
     image.cover(512, 512);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    return await image.getBufferAsync(mimeType);
 }
 
 /**
  * @param {Buffer} buffer
+ * @param mimeType
  * @returns {Promise<Buffer>}
  */
-export async function fillImage(buffer) {
+export async function fillImage(buffer, mimeType = Jimp.MIME_JPEG) {
     const image = await Jimp.read(buffer);
     image.resize(512, 512);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    return await image.getBufferAsync(mimeType);
 }
 
 /**
- * Convert image to JPEG
+ * Convert image to different format
  *
  * @param {Buffer} buffer
+ * @param mimeType
  * @returns {Promise<Buffer>}
  */
-export async function convertToJpeg(buffer) {
+export async function convertImage(buffer, mimeType) {
     const image = await Jimp.read(buffer);
-    return await image.getBufferAsync(Jimp.MIME_JPEG);
+    return await image.getBufferAsync(mimeType);
 }
 
 /**
