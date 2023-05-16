@@ -3,6 +3,8 @@ const {LocalAuth, MessageMedia, MessageTypes} = wweb;
 import {getUptime, streamToBuffer} from "./utils.js";
 import {convertToJpeg, coverImage, fillImage, isImage} from "./image-utils.js";
 
+const DEFAULT_STICKER_NAME = 'Sticker Pack';
+
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
     authStrategy: new LocalAuth({
@@ -40,8 +42,7 @@ client.on('message', async (msg) => {
             await client.sendMessage(msg.from, 'Available commands:\n - !help\n - !sticker <stickerName>\n - !sticker full <stickerName>\n - !sticker fill <stickerName>\n - !sticker <@mention> <stickerName>\n - !stats');
             break;
         case '!sticker':
-            let stickerName = args[2] ?? args[1] ?? args[0] ?? 'Sticker Pack';
-            await client.sendMessage(msg.from, `Processing your sticker (${stickerName})...`);
+            let stickerName = DEFAULT_STICKER_NAME;
 
             const mentions = await msg.getMentions();
             if (mentions.length > 0) {
@@ -65,11 +66,7 @@ client.on('message', async (msg) => {
                 }
 
                 const media = new MessageMedia('image/jpeg', buf.toString('base64'));
-                await client.sendMessage(msg.from, media, {
-                    sendMediaAsSticker: true,
-                    stickerAuthor: 'broki\'s bot',
-                    stickerName: stickerName
-                });
+                await sendSticker(msg, media, args[1] ?? DEFAULT_STICKER_NAME);
                 return;
             }
 
@@ -81,29 +78,25 @@ client.on('message', async (msg) => {
                         return
                     }
 
-                    stickerName = args[0] ?? 'Sticker Pack';
+                    stickerName = args[0] ?? DEFAULT_STICKER_NAME;
 
                     if (msg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
                             const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
+                                    stickerName = args[1] ?? DEFAULT_STICKER_NAME;
                                     media.data = (await coverImage(buffer)).toString('base64');
                                     break;
                                 case 'fill':
+                                    stickerName = args[1] ?? DEFAULT_STICKER_NAME;
                                     media.data = (await fillImage(buffer)).toString('base64');
                                     break;
                             }
                         }
                     }
 
-                    stickerName = args[1] ?? 'Sticker Pack';
-
-                    await client.sendMessage(msg.from, media, {
-                        sendMediaAsSticker: true,
-                        stickerAuthor: 'broki\'s bot',
-                        stickerName: stickerName
-                    })
+                    await sendSticker(msg, media, stickerName);
                 } else {
                     await msg.reply('Only images and videos are supported.');
                 }
@@ -121,29 +114,25 @@ client.on('message', async (msg) => {
                         return
                     }
 
-                    stickerName = args[0] ?? 'Sticker Pack';
+                    stickerName = args[0] ?? DEFAULT_STICKER_NAME;
 
                     if (quotedMsg.type === MessageTypes.IMAGE) {
                         if (args.length > 0) {
                             const buffer = Buffer.from(media.data, 'base64');
                             switch (args[0]) {
                                 case 'full':
+                                    stickerName = args[1] ?? DEFAULT_STICKER_NAME;
                                     media.data = (await coverImage(buffer)).toString('base64');
                                     break;
                                 case 'fill':
+                                    stickerName = args[1] ?? DEFAULT_STICKER_NAME;
                                     media.data = (await fillImage(buffer)).toString('base64');
                                     break;
                             }
                         }
                     }
 
-                    stickerName = args[1] ?? 'Sticker Pack';
-
-                    await client.sendMessage(msg.from, media, {
-                        sendMediaAsSticker: true,
-                        stickerAuthor: 'broki\'s bot',
-                        stickerName: stickerName
-                    });
+                    await sendSticker(msg, media, stickerName);
                 } else {
                     await msg.reply('Only images and videos are supported.');
                 }
@@ -162,26 +151,22 @@ client.on('message', async (msg) => {
                         return;
                     }
 
-                    stickerName = args[1] ?? 'Sticker Pack';
+                    stickerName = args[1] ?? DEFAULT_STICKER_NAME;
 
                     let imageBuf = await convertToJpeg(buffer);
                     switch (args[1] || '') {
                         case 'full':
+                            stickerName = args[2] ?? DEFAULT_STICKER_NAME;
                             imageBuf = await coverImage(imageBuf);
                             break;
                         case 'fill':
+                            stickerName = args[2] ?? DEFAULT_STICKER_NAME;
                             imageBuf = await fillImage(imageBuf);
                             break;
                     }
 
-                    stickerName = args[2] ?? 'Sticker Pack';
-
                     const media = new MessageMedia('image/jpeg', imageBuf.toString('base64'));
-                    await client.sendMessage(msg.from, media, {
-                        sendMediaAsSticker: true,
-                        stickerAuthor: 'broki\'s bot',
-                        stickerName: stickerName
-                    });
+                    await sendSticker(msg, media, stickerName);
                 } else {
                     await client.sendMessage(msg.from, 'Please send/reply to an image or video to convert it to a sticker.');
                 }
@@ -195,6 +180,21 @@ client.on('message', async (msg) => {
             break
     }
 });
+
+/**
+ * @param {Message} msg
+ * @param {MessageContent} media
+ * @param {string} stickerName
+ * @returns {Promise<void>}
+ */
+async function sendSticker(msg, media, stickerName) {
+    await client.sendMessage(msg.from, 'Processing your sticker...');
+    await client.sendMessage(msg.from, media, {
+        sendMediaAsSticker: true,
+        stickerAuthor: 'broki\'s bot',
+        stickerName: stickerName
+    });
+}
 
 process.on("SIGINT", async () => {
     console.log("(SIGINT) Shutting down...");
