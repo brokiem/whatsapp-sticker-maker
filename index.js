@@ -6,6 +6,8 @@ import {fileTypeFromBuffer} from "file-type";
 
 const DEFAULT_STICKER_NAME = 'Sticker Pack';
 
+console.log("Starting up...");
+
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
     authStrategy: new LocalAuth({
