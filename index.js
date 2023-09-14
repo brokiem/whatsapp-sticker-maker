@@ -9,7 +9,7 @@ const DEFAULT_STICKER_NAME = 'Sticker Pack';
 
 console.log("Starting up...");
 
-const dataFiles = readdirSync("./data");
+const dataFiles = readdirSync("./data/");
 dataFiles.forEach(dirName => {
     if (dirName !== process.env.AUTH_DATA_PATH.split("/")[1]) {
         rmdirSync("./data/" + dirName, {recursive: true});
