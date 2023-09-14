@@ -1,5 +1,5 @@
 # Specify the base image
-FROM oven/bun
+FROM node
 
 # Install Google Chrome and ffmpeg
 RUN apt-get update && apt-get install -y wget gnupg2 ffmpeg
@@ -13,10 +13,10 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /app
 
 # Copy the package.json and yarn.lock files to the container
-COPY package.json ./
+COPY package.json yarn.lock ./
 
 # Install the dependencies
-RUN bun install
+RUN yarn install
 
 # Export the path to ffmpeg binary
 ENV PATH="/usr/bin/ffmpeg:${PATH}"
@@ -25,4 +25,4 @@ ENV PATH="/usr/bin/ffmpeg:${PATH}"
 COPY . .
 
 # Start the application
-CMD ["bun", "start"]
+CMD ["yarn", "start"]
