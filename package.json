@@ -12,6 +12,6 @@
   "dependencies": {
     "file-type": "^18.4.0",
     "jimp": "^0.22.10",
-    "whatsapp-web.js": "brunox64/whatsapp-web.js#patch-1"
+    "whatsapp-web.js": "elhumbertoz/whatsapp-web.js#patch-2"
   }
 }
