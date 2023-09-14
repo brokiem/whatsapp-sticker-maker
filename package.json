@@ -7,7 +7,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "bun index.js"
   },
   "dependencies": {
     "file-type": "^18.4.0",
