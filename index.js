@@ -3,10 +3,18 @@ const {LocalAuth, MessageMedia, MessageTypes} = wweb;
 import {getUptime, streamToBuffer} from "./utils.js";
 import {convertImage, coverImage, fillImage, isImage} from "./image-utils.js";
 import {fileTypeFromBuffer} from "file-type";
+import {readdirSync, rmdirSync} from "fs";
 
 const DEFAULT_STICKER_NAME = 'Sticker Pack';
 
 console.log("Starting up...");
+
+const dataFiles = readdirSync("./data");
+dataFiles.forEach(dirName => {
+    if (dirName !== process.env.AUTH_DATA_PATH.split("/")[1]) {
+        rmdirSync("./data/" + dirName, {recursive: true});
+    }
+});
 
 const client = new Client({
     ffmpegPath: process.env.FFMPEG_PATH || '/usr/bin/ffmpeg',
