@@ -1,4 +1,4 @@
-import Jimp from "jimp";
+import {Jimp,JimpMime} from "jimp";
 import {fileTypeFromBuffer} from "file-type";
 
 /**
@@ -6,10 +6,10 @@ import {fileTypeFromBuffer} from "file-type";
  * @param mimeType
  * @returns {Promise<Buffer>}
  */
-export async function coverImage(buffer, mimeType = Jimp.MIME_JPEG) {
+export async function coverImage(buffer, mimeType = JimpMime.jpeg) {
     const image = await Jimp.read(buffer);
-    image.cover(512, 512);
-    return await image.getBufferAsync(mimeType);
+    image.cover({ w: 512, h: 512 });
+    return await image.getBuffer(mimeType);
 }
 
 /**
@@ -17,10 +17,10 @@ export async function coverImage(buffer, mimeType = Jimp.MIME_JPEG) {
  * @param mimeType
  * @returns {Promise<Buffer>}
  */
-export async function fillImage(buffer, mimeType = Jimp.MIME_JPEG) {
+export async function fillImage(buffer, mimeType = JimpMime.jpeg) {
     const image = await Jimp.read(buffer);
-    image.resize(512, 512);
-    return await image.getBufferAsync(mimeType);
+    image.resize({ w: 512, h: 512 });
+    return await image.getBuffer(mimeType);
 }
 
 /**
@@ -32,7 +32,7 @@ export async function fillImage(buffer, mimeType = Jimp.MIME_JPEG) {
  */
 export async function convertImage(buffer, mimeType) {
     const image = await Jimp.read(buffer);
-    return await image.getBufferAsync(mimeType);
+    return await image.getBuffer(mimeType);
 }
 
 /**
