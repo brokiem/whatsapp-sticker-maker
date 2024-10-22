@@ -12,7 +12,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 # Set the working directory
 WORKDIR /app
 
-# Copy the package.json and yarn.lock files to the container
+# Copy the package.json and bun.lock files to the container
 COPY package.json ./
 
 # Install the dependencies
