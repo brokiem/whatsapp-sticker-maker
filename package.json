@@ -10,7 +10,7 @@
     "start": "bun index.js"
   },
   "dependencies": {
-    "file-type": "^19.6.0",
+    "file-type": "^20.0.0",
     "jimp": "^1.6.0",
     "whatsapp-web.js": "1.26.0"
   }
